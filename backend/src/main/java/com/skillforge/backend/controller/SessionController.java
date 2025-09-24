@@ -1,6 +1,7 @@
 package com.skillforge.backend.controller;
 
 import com.skillforge.backend.dto.CreateSessionRequest;
+import com.skillforge.backend.dto.SessionDTO;
 import com.skillforge.backend.model.Session;
 import com.skillforge.backend.model.User;
 import com.skillforge.backend.service.SessionService;
@@ -27,8 +28,8 @@ public class SessionController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Session>> getAllSessions() {
-        return ResponseEntity.ok(sessionService.getAll());
+    public ResponseEntity<List<SessionDTO>> getAllSessions() {
+        return ResponseEntity.ok(sessionService.getAllDTO());
     }
 
     @GetMapping("/my")

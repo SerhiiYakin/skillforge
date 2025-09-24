@@ -1,6 +1,7 @@
 package com.skillforge.backend.service;
 
 import com.skillforge.backend.dto.CreateSessionRequest;
+import com.skillforge.backend.dto.SessionDTO;
 import com.skillforge.backend.model.Session;
 import com.skillforge.backend.model.User;
 import com.skillforge.backend.repository.SessionRepository;
@@ -32,5 +33,23 @@ public class SessionService {
 
     public List<Session> getByMentorId(Long id) {
         return sessionRepository.findByMentorId(id);
+    }
+
+    public List<SessionDTO> getAllDTO() {
+        return sessionRepository.findAll().stream()
+                .map(this::mapToDTO)
+                .toList();
+    }
+
+    private SessionDTO mapToDTO(Session session) {
+        User mentor = session.getMentor();
+        return SessionDTO.builder()
+                .id(session.getId())
+                .title(session.getTitle())
+                .description(session.getDescription())
+                .dateTime(session.getDateTime())
+                .mentorId(mentor.getId())
+                .mentorName(mentor.getFirstname() + " " + mentor.getLastname())
+                .build();
     }
 }
